@@ -1,0 +1,2 @@
+INPUT_FILE_NAMES = "data/input_file_names.json"
+OUTPUT_FILE_NAMES = "data/output_file_names.json"
