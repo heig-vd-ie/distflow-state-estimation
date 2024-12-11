@@ -1,4 +1,9 @@
 {
-    "SM_address":".cache/input/Smart meters/DonneesTri 2020.07.03.mat",
-    "GE_address" : ".cache/input/GridEye/"
+    "SM_address":           ".cache/input/Smart meters/DonneesTri 2020.07.03.mat",
+    "GE_address" :          ".cache/input/GridEye/",
+    "Distflow_parameter":   ".cache/Matlab_Data_DistFlow/dist_flow_inputdata_dist_flow_parameter.csv",
+    "Distflow_node_data":   ".cache/Matlab_Data_DistFlow/dist_flow_inputdata_nodedata.csv",
+    "Distflow_Power_data":  ".cache/Matlab_Data_DistFlow/dist_flow_inputdata_powerdata.csv",
+    "Distflow_Line_data":   ".cache/Matlab_Data_DistFlow/dist_flow_inputdata_dataline.csv",
+    "Distflow_result":     ".cache/Matlab_Data_DistFlow/dist_flow_result_data.csv"
 }
