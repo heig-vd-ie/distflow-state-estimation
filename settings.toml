@@ -1,2 +1,3 @@
 INPUT_FILE_NAMES = "data/input_file_names.json"
 OUTPUT_FILE_NAMES = "data/output_file_names.json"
+DEFAULT_INSTALL_DATE = [1960, 1, 1]
