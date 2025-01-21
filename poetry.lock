@@ -564,6 +564,24 @@ files = [
 ]
 
 [[package]]
+name = "donfig"
+version = "0.8.1.post1"
+description = "Python package for configuring a python package"
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "donfig-0.8.1.post1-py3-none-any.whl", hash = "sha256:2a3175ce74a06109ff9307d90a230f81215cbac9a751f4d1c6194644b8204f9d"},
+    {file = "donfig-0.8.1.post1.tar.gz", hash = "sha256:3bef3413a4c1c601b585e8d297256d0c1470ea012afa6e8461dc28bfb7c23f52"},
+]
+
+[package.dependencies]
+pyyaml = "*"
+
+[package.extras]
+docs = ["cloudpickle", "numpydoc", "pytest", "sphinx (>=4.0.0)"]
+test = ["cloudpickle", "pytest"]
+
+[[package]]
 name = "duckdb"
 version = "1.1.3"
 description = "DuckDB in-process database"
@@ -2556,6 +2574,39 @@ files = [
 six = ">=1.5"
 
 [[package]]
+name = "python-graphblas"
+version = "2024.2.0"
+description = "Python library for GraphBLAS: high-performance sparse linear algebra for scalable graph analytics"
+optional = false
+python-versions = ">=3.9"
+files = [
+    {file = "python-graphblas-2024.2.0.tar.gz", hash = "sha256:51a31b4b20cae3fbfdb86a95f7ef1d5a06d749f281640bfcc724f6dda79d266b"},
+    {file = "python_graphblas-2024.2.0-py3-none-any.whl", hash = "sha256:93ead0b137d691cb56acbcb935062174445cf006dfee22f7945f25cc3e29bed6"},
+]
+
+[package.dependencies]
+donfig = ">=0.6"
+numba = {version = ">=0.55", markers = "python_version < \"3.13\""}
+numpy = ">=1.22"
+pyyaml = ">=5.4"
+suitesparse-graphblas = ">=7.4.0.0,<9"
+
+[package.extras]
+all = ["python-graphblas[datashade]", "python-graphblas[default,io,test,viz]"]
+datashade = ["datashader (>=0.12)", "hvplot (>=0.7)", "python-graphblas[numba,pandas,scipy]"]
+default = ["python-graphblas[numba]", "python-graphblas[pandas,scipy,suitesparse]"]
+io = ["awkward (>=1.9)", "fast-matrix-market (>=1.4.5)", "python-graphblas[networkx,scipy]", "python-graphblas[numba]", "sparse (>=0.13)"]
+networkx = ["networkx (>=2.8)"]
+numba = ["numba (>=0.55)"]
+pandas = ["pandas (>=1.2)"]
+repr = ["python-graphblas[pandas]"]
+scipy = ["scipy (>=1.9)"]
+suitesparse = ["suitesparse-graphblas (>=7.4.0.0,<9)"]
+suitesparse-udf = ["python-graphblas[numba,suitesparse]"]
+test = ["packaging (>=21)", "pytest (>=6.2)", "python-graphblas[pandas,scipy,suitesparse]", "tomli (>=1)"]
+viz = ["matplotlib (>=3.5)", "python-graphblas[networkx,scipy]"]
+
+[[package]]
 name = "pytz"
 version = "2024.2"
 description = "World timezone definitions, modern and historical"
@@ -3474,6 +3525,58 @@ develop = ["colorama", "cython (>=3.0.10)", "cython (>=3.0.10,<4)", "flake8", "i
 docs = ["ipykernel", "jupyter-client", "matplotlib", "nbconvert", "nbformat", "numpydoc", "pandas-datareader", "sphinx"]
 
 [[package]]
+name = "suitesparse-graphblas"
+version = "8.2.1.0"
+description = "SuiteSparse:GraphBLAS Python bindings."
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "suitesparse-graphblas-8.2.1.0.tar.gz", hash = "sha256:69c975d9b5ddcf5fa3172a86c3ccbdac4670667a39bac41138b2d70fe24e32ba"},
+    {file = "suitesparse_graphblas-8.2.1.0-cp310-cp310-macosx_10_9_x86_64.whl", hash = "sha256:e2a3cf55f141fac2c2a48418cc280ba52b360555334e71b45e7b3cb2024ebbd2"},
+    {file = "suitesparse_graphblas-8.2.1.0-cp310-cp310-macosx_11_0_arm64.whl", hash = "sha256:e1425eb1a64b0858e1e5d7511101bdcf6b623127f06bad26d82cb602078e17dd"},
+    {file = "suitesparse_graphblas-8.2.1.0-cp310-cp310-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:4dd7b6d2d7fd93a35b3a4d42a27f87dba1ac12ad43a2c047c4666c33750e60c0"},
+    {file = "suitesparse_graphblas-8.2.1.0-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:7ff36926e116100a012323d7de8b96678000e47c606148fbdff0923fb529bfc9"},
+    {file = "suitesparse_graphblas-8.2.1.0-cp310-cp310-musllinux_1_1_x86_64.whl", hash = "sha256:a4d58756885c34c1e83d394f8ac774f6ba4098bef3dc479502886f84bedec83a"},
+    {file = "suitesparse_graphblas-8.2.1.0-cp310-cp310-win_amd64.whl", hash = "sha256:6184e8dec471436d8d487e3f747b0cc46982928fe047d997f8ce1ca98591977d"},
+    {file = "suitesparse_graphblas-8.2.1.0-cp311-cp311-macosx_10_9_x86_64.whl", hash = "sha256:d8f32922f1ab2c3bc8b99fa5017fd6d01b582e8a3ad905aa4a47365eb238e002"},
+    {file = "suitesparse_graphblas-8.2.1.0-cp311-cp311-macosx_11_0_arm64.whl", hash = "sha256:0b3450edd71f9395ad8a29a474bd8ee63d6fc04e14813f3525ab9b01c703ba24"},
+    {file = "suitesparse_graphblas-8.2.1.0-cp311-cp311-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:25d8a00c88eb4f33cda2c6d94935203e3c39f81541d796b828bd0b93ea0252d7"},
+    {file = "suitesparse_graphblas-8.2.1.0-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:ce6ecfedc10dba9ed10705ead86f3e0cd997ee775c5a41732674324cfb43080d"},
+    {file = "suitesparse_graphblas-8.2.1.0-cp311-cp311-musllinux_1_1_x86_64.whl", hash = "sha256:1652887b2d587fe9d8e3d74cebb7979a593f93c0ec929108fe8bc33f2b0411d1"},
+    {file = "suitesparse_graphblas-8.2.1.0-cp311-cp311-win_amd64.whl", hash = "sha256:b10020c4a4f1948070f3b8fbb1d455a50405f4094b1217e37b1c90121de464df"},
+    {file = "suitesparse_graphblas-8.2.1.0-cp312-cp312-macosx_10_9_x86_64.whl", hash = "sha256:4ec4e6c46669713f3386444944aac0702d0567c84401365d7425e571cfab45a7"},
+    {file = "suitesparse_graphblas-8.2.1.0-cp312-cp312-macosx_11_0_arm64.whl", hash = "sha256:7e1fa7a7dc307ebeba584d9d774eee67150222e59af6aea7d15381f4afef1a5e"},
+    {file = "suitesparse_graphblas-8.2.1.0-cp312-cp312-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:303d365d373409f688e632586d0a7f95b8e1bf448291574d51c0076a33e78d24"},
+    {file = "suitesparse_graphblas-8.2.1.0-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:0835545c2faed54d51e1db8bb4f715125077205253b2cec60d92336af86ac7b1"},
+    {file = "suitesparse_graphblas-8.2.1.0-cp312-cp312-musllinux_1_1_x86_64.whl", hash = "sha256:18811d9c438c524230bbcc9488e5c7575363eca9b2ca64a731e892eb3edc8b15"},
+    {file = "suitesparse_graphblas-8.2.1.0-cp312-cp312-win_amd64.whl", hash = "sha256:572c6b98f3fd11912ce5c2bffb7e16ec0d2531dbdb6e893a795fe2d857c1e5bc"},
+    {file = "suitesparse_graphblas-8.2.1.0-cp38-cp38-macosx_10_9_x86_64.whl", hash = "sha256:ac3fc684437408704593b8131d6f198e87e3a0fdd24712685efb4a6e3ea00ad7"},
+    {file = "suitesparse_graphblas-8.2.1.0-cp38-cp38-macosx_11_0_arm64.whl", hash = "sha256:64d6ec284dd3767369a54839fbf5c5be8e1da01e637f0399c34a3aa09d14f60d"},
+    {file = "suitesparse_graphblas-8.2.1.0-cp38-cp38-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:49731841a4d9e1f94d78a9b374a311af66f3053d25939c9d382af5e29548e8f9"},
+    {file = "suitesparse_graphblas-8.2.1.0-cp38-cp38-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:bb4e25aa8c755e9a233222840160cafc9b2ba422cff587df559e1ca5a0a21bab"},
+    {file = "suitesparse_graphblas-8.2.1.0-cp38-cp38-win_amd64.whl", hash = "sha256:2e6531bd7ec9eebe288cdfead2afc309666945c47af470bcbb63fe90b90c0e33"},
+    {file = "suitesparse_graphblas-8.2.1.0-cp39-cp39-macosx_10_9_x86_64.whl", hash = "sha256:0b987d06a4265a5e59ec5ee09cc0bff61a13a3ed89894d57ebca75f5d15d6f8f"},
+    {file = "suitesparse_graphblas-8.2.1.0-cp39-cp39-macosx_11_0_arm64.whl", hash = "sha256:2e1fdaa834c15ebfdd4768d6bf2397f9f740efd1ad677af9ae7f456dddf92b4a"},
+    {file = "suitesparse_graphblas-8.2.1.0-cp39-cp39-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:9b5b1549a572d795fe592d147b9e6bccd1e85eeab29c606ef515bc7b4f2f808b"},
+    {file = "suitesparse_graphblas-8.2.1.0-cp39-cp39-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:38db0144ff63adf8a363ecfc32fcce78edf7573623ea4f914f4307f965d306e0"},
+    {file = "suitesparse_graphblas-8.2.1.0-cp39-cp39-musllinux_1_1_x86_64.whl", hash = "sha256:50603cc871f1f2bca5f049a35d0870f3db05d1da45e6477b32b8181f3600e60e"},
+    {file = "suitesparse_graphblas-8.2.1.0-cp39-cp39-win_amd64.whl", hash = "sha256:8a01d2b7a5250c5dfd16181d4c5deec0c6d2db665d4f61b59bd5f6cb9cf8d29b"},
+    {file = "suitesparse_graphblas-8.2.1.0-pp38-pypy38_pp73-macosx_10_9_x86_64.whl", hash = "sha256:09488f7bec983b108704c5d3d400a7fc6066a7ef5177ad2aa5a7c2669959a93d"},
+    {file = "suitesparse_graphblas-8.2.1.0-pp38-pypy38_pp73-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:f49379e782b422e412368df0befa62d0b0265c9c58473086f6b48404ef3aeb2b"},
+    {file = "suitesparse_graphblas-8.2.1.0-pp38-pypy38_pp73-win_amd64.whl", hash = "sha256:8abc979d1a01aec49278f800cedf7234c425da86af348f37d4c34c4d6a097f3a"},
+    {file = "suitesparse_graphblas-8.2.1.0-pp39-pypy39_pp73-macosx_10_9_x86_64.whl", hash = "sha256:39bd3ced2a84edbb823e907bd789f967d2b59015fa7b9ea8fef355a939ad7739"},
+    {file = "suitesparse_graphblas-8.2.1.0-pp39-pypy39_pp73-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:497b6b55fe1028a925246c3b931b246b450a549207f4f6142ee965d032ed0be1"},
+    {file = "suitesparse_graphblas-8.2.1.0-pp39-pypy39_pp73-win_amd64.whl", hash = "sha256:dfeabc44e6bc709a8b3449a81753b7f226a2c70ab56ab86479571c2650f1cb57"},
+]
+
+[package.dependencies]
+cffi = ">=1.11"
+numpy = ">=1.19"
+
+[package.extras]
+test = ["pytest"]
+
+[[package]]
 name = "threadpoolctl"
 version = "3.5.0"
 description = "threadpoolctl"
@@ -3622,6 +3725,7 @@ polars = "^1.17.1"
 pyarrow = "^18.1.0"
 pydata-sphinx-theme = "^0.16.1"
 pyocclient = "^0.6"
+python-graphblas = "^2024.2.0"
 shapely = "^2.0.6"
 sphinx = "^8.1.3"
 sphinx-copybutton = "^0.5.2"
@@ -3633,7 +3737,7 @@ tqdm = "^4.67.1"
 type = "git"
 url = "git@github.com:heig-vd-ie/utility-functions.git"
 reference = "HEAD"
-resolved_reference = "ac9c3fd9f0bb5f68712df6640bcf9709bd561053"
+resolved_reference = "bea983909379b529e47d8c167b0ad78e96a2bff3"
 
 [[package]]
 name = "wcwidth"
@@ -3660,4 +3764,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.12"
-content-hash = "dafb4ec7d00e50d40f36c84fbbf87c2786f8d91fc8634a10d432aa9b159f2b54"
+content-hash = "373a878361e1552ba0fff73e1f4d15d2e3699b1eb3992c02d4659797c0ce02f9"
