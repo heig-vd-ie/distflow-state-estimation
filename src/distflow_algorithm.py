@@ -185,8 +185,8 @@ class DistFlow():
             s_up = i_sq_update.ewise_mult(self.z_gb).ewise_add(s_down)
             dv_sq = self.z_sq_gb.ewise_mult(i_sq_update).ewise_add(-2* self.z_conj_gb.ewise_mult(s_up).apply(gb.unary.creal)) # type: ignore
             v_sq_update = v0_sq.ewise_add(self.dv_prop_gb.mxv(dv_sq))
-            diff_i = i_sq.ewise_add(-i_sq_update).ewise_mult(1/i_sq_update).apply(gb.unary.abs).reduce(gb.binary.max) # type: ignore
-            diff_u = v_sq.ewise_add(-v_sq_update).ewise_mult(1/v_sq_update).apply(gb.unary.abs).reduce(gb.binary.max) # type: ignore
+            diff_i = i_sq.ewise_add(-i_sq_update).ewise_mult(1/i_sq_update).apply(gb.unary.abs).reduce(gb.monoid.max) # type: ignore
+            diff_u = v_sq.ewise_add(-v_sq_update).ewise_mult(1/v_sq_update).apply(gb.unary.abs).reduce(gb.monoid.max) # type: ignore
             if (diff_u < self.tol) & (diff_i < self.tol):
                 break
             else:

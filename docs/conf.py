@@ -39,9 +39,9 @@ exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
 html_theme = "sphinx_rtd_theme"
 html_static_path = ['_static']
 
-html_css_files = [
-    "custom.css",  # Include the custom CSS file
-]
+# html_css_files = [
+#     "custom.css",  # Include the custom CSS file
+# ]
 
 sphinx_rtd_size_width = "75%"
 
