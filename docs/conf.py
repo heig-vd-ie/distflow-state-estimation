@@ -42,6 +42,7 @@ html_static_path = ['_static']
 # html_css_files = [
 #     "custom.css",  # Include the custom CSS file
 # ]
+add_module_names = False
 
 sphinx_rtd_size_width = "75%"
 
