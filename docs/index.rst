@@ -4,7 +4,7 @@ Distflow documentation
 =======================================
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 4
    :caption: Contents:
 
    state_estimation

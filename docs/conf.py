@@ -13,6 +13,9 @@ author = 'Luca Tomasini, Thierry Fracheboud'
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
 
+import os
+import sys
+sys.path.insert(0, os.path.abspath('../src'))  
 
 extensions = [
     "sphinx.ext.mathjax",
@@ -20,6 +23,7 @@ extensions = [
     "sphinx.ext.coverage",
     "sphinx.ext.napoleon",
     "sphinx.ext.autosectionlabel",
+    'sphinx.ext.viewcode'
     "sphinx_rtd_size",
     "nbsphinx",
     "myst_parser",
