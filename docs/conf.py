@@ -23,7 +23,7 @@ extensions = [
     "sphinx.ext.coverage",
     "sphinx.ext.napoleon",
     "sphinx.ext.autosectionlabel",
-    'sphinx.ext.viewcode'
+    'sphinx.ext.viewcode',
     "sphinx_rtd_size",
     "nbsphinx",
     "myst_parser",
