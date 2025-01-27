@@ -63,6 +63,8 @@ jobs:
           export PATH="$HOME/.local/bin:$PATH"
           poetry install
       
+      - name: Debug installed packages
+        run: poetry run python -c "import networkx_function; print('networkx_function Imported Successfully')"
       # - name: Configure Poetry for SSH
       #   run: |
       #     export PATH="$HOME/.local/bin:$PATH"
@@ -78,8 +80,7 @@ jobs:
           export PATH="$HOME/.local/bin:$PATH"
           poetry run ghp-import -n -p -f docs/_build/html
 
-      - name: Debug installed packages
-        run: poetry run python -c "import networkx_function; print('networkx_function Imported Successfully')"
+
   
       # Runs a set of commands using the runners shell
       - name: Run a multi-line script
