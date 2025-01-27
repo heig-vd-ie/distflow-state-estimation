@@ -63,10 +63,10 @@ jobs:
           export PATH="$HOME/.local/bin:$PATH"
           poetry install
 
-      - name: Configure Poetry for SSH
-        run: |
-          export PATH="$HOME/.local/bin:$PATH"
-          poetry config git-ssh-command "ssh -o StrictHostKeyChecking=no"
+      # - name: Configure Poetry for SSH
+      #   run: |
+      #     export PATH="$HOME/.local/bin:$PATH"
+      #     poetry config git-ssh-command "ssh -o StrictHostKeyChecking=no"
     
       - name: Build HTML
         run: |
