@@ -1,3 +1,118 @@
+r"""
+Generate the full Jacobian matrix for the given distribution flow schema.
+
+Args:
+    distflow_schema (DistFlowSchema): The schema containing the edge data for the distribution flow.
+    slack_node_id (int): The ID of the slack node in the grid.
+
+Returns:
+    np.array: The full Jacobian matrix.
+
+Raises:
+    ValueError: If edge_data is empty, contains parallel edges, or if the slack node is not in the grid.
+    ValueError: If the grid is not a connected tree.
+    
+The Jacobian matrix is a block matrix with the following structure:
+
+.. math::
+    :label: jacobian-matrix
+    :nowrap:
+    
+    \begin{align}
+    \Large{
+        H(x)= \begin{bmatrix}
+            \frac{\partial P_\text{load}}{\partial P_\text{load}} & \frac{\partial P_\text{load}}{\partial Q_\text{load}} & 
+            \frac{\partial P_\text{load}}{\partial V_\text{0}^{2}} \\
+            \frac{\partial Q_\text{load}}{\partial P_\text{load}} & \frac{\partial Q_\text{load}}{\partial Q_\text{load}} & 
+            \frac{\partial Q_\text{load}}{\partial V_\text{0}^{2}} \\
+            \frac{\partial P_\text{flow}}{\partial P_\text{load}} & \frac{\partial P_\text{flow}}{\partial Q_\text{load}} & 
+            \frac{\partial P_\text{flow}}{\partial V_\text{0}^{2}} \\
+            \frac{\partial Q_\text{flow}}{\partial P_\text{load}} & \frac{\partial Q_\text{flow}}{\partial Q_\text{load}} & 
+            \frac{\partial Q_\text{flow}}{\partial V_\text{0}^{2}} \\
+            \frac{\partial V^{2}}{\partial P_\text{load}} & \frac{\partial V^{2}}{\partial Q_\text{load}} & 
+            \frac{\partial V^{2}}{\partial V_\text{0}^{2}} \\
+            \frac{\partial V_\text{0}^{2}}{\partial P_\text{load}} & \frac{\partial V_\text{0}^{2}}{\partial Q_\text{load}} & 
+            \frac{\partial V_\text{0}^{2}}{\partial V_\text{0}^{2}}
+        \end{bmatrix}
+    }
+    \end{align}
+
+.. math::
+    :nowrap:
+    
+    \begin{align}
+        \frac{\partial P_\text{load}}{\partial P_\text{load}} = 
+        \frac{\partial Q_\text{load}}{\partial Q_\text{load}} = I
+    \end{align}
+
+
+.. math::
+    :nowrap:
+    
+    \begin{align}
+        \frac{\partial P_\text{flow}^{i}}{\partial P_\text{load}^{j}} = 
+        \frac{\partial Q_\text{flow}^{i}}{\partial Q_\text{load}^{j}} = 
+        \begin{cases}
+            1 &\text{if node } i \text{ is downstream node } j \\
+            0 &\text{otherwise}
+        \end{cases}
+    \end{align}
+
+.. math::
+    :nowrap:
+    
+    \begin{align}
+        \frac{\partial V^{i}}{\partial P_\text{load}^{j}} = - 2 \cdot \displaystyle\sum_{k \in K} R_{k}
+    \end{align}
+
+.. math::
+    :nowrap:
+    
+    \begin{align}
+        \frac{\partial V^{i}}{\partial Q_\text{load}^{j}} = - 2 \cdot \displaystyle\sum_{k \in K} X_{k}
+    \end{align}        
+
+where :math:`K` is the set of edges in the path connecting the slack node to the lowest common ancestor of nodes 
+:math:`i` and :math:`j`.
+
+.. math::
+    :nowrap:
+    
+    \begin{align}
+        \frac{\partial P_\text{flow}^{i}}{\partial V_\text{0}^{2}} = - \displaystyle\sum_{l \in L} G_{l}
+    \end{align}    
+
+.. math::
+    :nowrap:
+    
+    \begin{align}
+        \frac{\partial Q_\text{flow}^{i}}{\partial V_\text{0}^{2}} = - \displaystyle\sum_{l \in L} B_{l}
+    \end{align} 
+
+where :math:`L` is the set of edges connected downstream the node :math:`i`.    
+    
+.. math::
+    :nowrap:
+    
+    \begin{align}
+        \frac{\partial V^{2}}{\partial V_\text{0}^{2}} = - \displaystyle\prod_{m \in M} N_{m}
+    \end{align} 
+
+
+where :math:`M` is the set of edges connected upstream the node :math:`i`.
+
+.. math::
+    :nowrap:
+    
+    \begin{align}
+        \frac{\partial P_\text{load}}{\partial Q_\text{load}},\frac{\partial Q_\text{load}}{\partial P_\text{load}},
+        \frac{\partial P_\text{load}}{\partial V_\text{0}^{2}}, \frac{\partial Q_\text{load}}{\partial V_\text{0}^{2}}, 
+        \frac{\partial P_\text{flow}}{\partial Q_\text{load}}, \frac{\partial Q_\text{flow}}{\partial P_\text{load}}, 
+        \frac{\partial V_\text{0}^{2}}{\partial P_\text{load}}, \frac{\partial V_\text{0}^{2}}{\partial Q_\text{load}}= {0}
+    \end{align} 
+
+"""
+
 import polars as pl
 from polars import col as c
 import patito as pt
