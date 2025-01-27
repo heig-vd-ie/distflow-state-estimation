@@ -1,11 +1,11 @@
 
 
-Distflow state estimation documentation
+Distflow documentation
 =======================================
 
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
 
-   modules
+   state_estimation
 

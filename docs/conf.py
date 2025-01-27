@@ -6,7 +6,7 @@
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
-project = 'Distflow state estimation'
+project = 'Distflow algorithm'
 copyright = '2024, Luca Tomasini, Thierry Fracheboud'
 author = 'Luca Tomasini, Thierry Fracheboud'
 
