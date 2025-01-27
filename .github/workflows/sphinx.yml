@@ -27,6 +27,12 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
 
+      # Set up SSH agent for private repo access
+      - name: Set up SSH
+        uses: webfactory/ssh-agent@v0.5.3
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
       - name: Set up Python 3.12
         uses: actions/setup-python@v2
         with:
@@ -56,6 +62,11 @@ jobs:
         run: |
           export PATH="$HOME/.local/bin:$PATH"
           poetry install
+
+      - name: Configure Poetry for SSH
+        run: |
+          export PATH="$HOME/.local/bin:$PATH"
+          poetry config git-ssh-command "ssh -o StrictHostKeyChecking=no"
     
       - name: Build HTML
         run: |
