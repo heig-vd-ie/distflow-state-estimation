@@ -57,9 +57,9 @@ jobs:
       #     ssh-add ~/.ssh/data-schema
       #     ssh-keyscan github.com >> ~/.ssh/known_hosts
 
-      - name: Test SSH connection to GitHub
-        run: |
-          ssh -T git@github.com
+      # - name: Test SSH connection to GitHub
+      #   run: |
+      #     ssh -T git@github.com
 
       - name: Set up Python 3.12
         uses: actions/setup-python@v2
