@@ -27,15 +27,15 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
 
-      # # Set up SSH agent for private repo access
-      # - name: Set up SSH
-      #   uses: webfactory/ssh-agent@v0.5.3
-      #   with:
-      #     ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+      # Set up SSH agent for private repo access
+      - name: Set up SSH
+        uses: webfactory/ssh-agent@v0.5.3
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
       
       - name: Set up SSH for utility-functions repo
         run: |
-          mkdir -p ~/.ssh
+          
           echo "${{ secrets.SSH_PRIVATE_KEY_UTILIY_FUNCTIONS}}" > ~/.ssh/utility-functions
           chmod 600 ~/.ssh/utility-functions
           ssh-add ~/.ssh/utility-functions
