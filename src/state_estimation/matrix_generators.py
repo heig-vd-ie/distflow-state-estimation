@@ -130,7 +130,7 @@ def generate_full_jacobian_matrix(distflow_schema: DistFlowSchema, slack_node_id
         :nowrap:
         
         \begin{align}
-            \frac{\partial V_{i}^{2}}{\partial V_\text{0}^{2}} = - \displaystyle\prod_{m \in M} N_{m}
+            \frac{\partial V_{i}^{2}}{\partial V_\text{0}^{2}} = \displaystyle\prod_{m \in M} N_{m}
         \end{align} 
     
     
