@@ -38,29 +38,7 @@ jobs:
         uses: webfactory/ssh-agent@v0.5.3
         with:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY_DATASCHEMA }}
-      
-      # - name: Set up SSH for utility-functions repo
-      #   run: |
-      #     # Start the SSH agent
-      #     eval "$(ssh-agent -s)"
-      #     mkdir -p ~/.ssh
-      #     echo "${{ secrets.SSH_PRIVATE_KEY_UTILIY_FUNCTIONS}}" > ~/.ssh/utility-functions
-      #     chmod 600 ~/.ssh/utility-functions
-      #     ssh-add ~/.ssh/utility-functions
-      #     ssh-keyscan github.com >> ~/.ssh/known_hosts
-
-      # - name: Set up SSH for data-schema repo
-      #   run: |
-      #     eval "$(ssh-agent -s)"
-      #     echo "${{ secrets.SSH_PRIVATE_KEY_DATASCHEMA}}" > ~/.ssh/data-schema
-      #     chmod 600 ~/.ssh/data-schema
-      #     ssh-add ~/.ssh/data-schema
-      #     ssh-keyscan github.com >> ~/.ssh/known_hosts
-
-      # - name: Test SSH connection to GitHub
-      #   run: |
-      #     ssh -T git@github.com
-
+          
       - name: Set up Python 3.12
         uses: actions/setup-python@v2
         with:

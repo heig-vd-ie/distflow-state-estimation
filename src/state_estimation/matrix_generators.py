@@ -67,6 +67,19 @@ def generate_full_jacobian_matrix(distflow_schema: DistFlowSchema, slack_node_id
             \frac{\partial \mathbf{Q_\text{load}}}{\partial \mathbf{Q_\text{load}}} = \mathbf{I}
         \end{align}
     
+    .. math::
+        :nowrap:
+        
+        \begin{align}
+            \frac{\partial \mathbf{P_\text{load}}}{\partial \mathbf{Q_\text{load}}},
+            \frac{\partial \mathbf{Q_\text{load}}}{\partial \mathbf{P_\text{load}}},
+            \frac{\partial \mathbf{P_\text{load}}}{\partial \mathbf{V_\text{0}}^{2}},
+            \frac{\partial \mathbf{Q_\text{load}}}{\partial \mathbf{V_\text{0}}^{2}},
+            \frac{\partial \mathbf{P_\text{flow}}}{\partial \mathbf{Q_\text{load}}},
+            \frac{\partial \mathbf{Q_\text{flow}}}{\partial \mathbf{P_\text{load}}},
+            \frac{\partial \mathbf{V_\text{0}}^{2}}{\partial \mathbf{P_\text{load}}},
+            \frac{\partial \mathbf{V_\text{0}}^{2}}{\partial \mathbf{Q_\text{load}}} = \mathbf{0}
+        \end{align} 
 
     .. math::
         :nowrap:
@@ -84,14 +97,14 @@ def generate_full_jacobian_matrix(distflow_schema: DistFlowSchema, slack_node_id
         :nowrap:
         
         \begin{align}
-            \frac{\partial V^{i}}{\partial P_\text{load}^{j}} = - 2 \cdot \displaystyle\sum_{k \in K} R_{k}
+            \frac{\partial V_{i}^{2}}{\partial P_\text{load}^{j}} = - 2 \cdot \displaystyle\sum_{k \in K} R_{k}
         \end{align}
     
     .. math::
         :nowrap:
         
         \begin{align}
-            \frac{\partial V^{i}}{\partial Q_\text{load}^{j}} = - 2 \cdot \displaystyle\sum_{k \in K} X_{k}
+            \frac{\partial V_{i}^{2}}{\partial Q_\text{load}^{j}} = - 2 \cdot \displaystyle\sum_{k \in K} X_{k}
         \end{align}        
 
     where :math:`K` is the set of edges in the path connecting the slack node to the lowest common ancestor of nodes 
@@ -122,20 +135,7 @@ def generate_full_jacobian_matrix(distflow_schema: DistFlowSchema, slack_node_id
     
     
     where :math:`M` is the set of edges connected upstream the node :math:`i`.
-    
-    .. math::
-        :nowrap:
-        
-        \begin{align}
-            \frac{\partial \mathbf{P_\text{load}}}{\partial \mathbf{Q_\text{load}}},
-            \frac{\partial \mathbf{Q_\text{load}}}{\partial \mathbf{P_\text{load}}},
-            \frac{\partial \mathbf{P_\text{load}}}{\partial \mathbf{V_\text{0}}^{2}},
-            \frac{\partial \mathbf{Q_\text{load}}}{\partial \mathbf{V_\text{0}}^{2}},
-            \frac{\partial \mathbf{P_\text{flow}}}{\partial \mathbf{Q_\text{load}}},
-            \frac{\partial \mathbf{Q_\text{flow}}}{\partial \mathbf{P_\text{load}}},
-            \frac{\partial \mathbf{V_\text{0}}^{2}}{\partial \mathbf{P_\text{load}}},
-            \frac{\partial \mathbf{V_\text{0}}^{2}}{\partial \mathbf{Q_\text{load}}} = \mathbf{0}
-        \end{align} 
+
     
     """
     edge_data: pt.DataFrame = distflow_schema.edge_data
