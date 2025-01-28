@@ -18,9 +18,9 @@ from twindigrid_changes.schema import ChangesSchema
 
 from config import settings
 
-from utility.general_function import build_non_existing_dirs, generate_log, camel_to_snake, pl_to_dict, snake_to_camel, dict_to_gpkg, table_to_gpkg
-from utility.polars_operation import (
-    generate_random_uuid, point_list_to_linestring_col, geoalchemy2_to_wkt)
+from general_function import build_non_existing_dirs, generate_log, camel_to_snake, pl_to_dict, snake_to_camel, dict_to_gpkg, table_to_gpkg
+from polars_function import (
+    generate_random_uuid)
 
 log = generate_log(name=__name__)
 
@@ -252,96 +252,3 @@ def get_base_voltage_mapping(
         [["eq_fk", "base_voltage_fk"]]
     )
 
-
-def schema_to_gpkg(
-        changes_schema: ChangesSchema, file_path: str, add_building_conn: bool = True, 
-        get_feeder_name: bool = True):
-    
-    initialize_output_files(file_path)
-    base_voltage_mapping: dict[str, int] = get_base_voltage_mapping(changes_schema=changes_schema)
-    geo: pl.DataFrame = changes_schema.geo_event.select(
-        c("geo").pipe(geoalchemy2_to_wkt).alias("geometry"),
-        c("res_fk").alias("uuid")
-    )
-
-    connectivity : pl.DataFrame = changes_schema.connectivity
-    resource: pl.DataFrame  = geo.join(
-            changes_schema.resource[["uuid", "concrete_class", "dso_code", "name", "feeder_fk", "metadata"]], 
-            on="uuid", how="left"
-        ).with_columns(
-            c("uuid").replace_strict(base_voltage_mapping, default = None).alias("base_voltage_fk"),
-        )
-    
-    if get_feeder_name:
-        feeder: pl.DataFrame = changes_schema.measurement.filter(c("source_fk") == SCADA).select(
-            pl.concat_str("resource_fk", "terminal_side").alias("id"), "name"
-        )
-
-        feeder_name_mapping = pl_to_dict(
-            feeder.join(
-                connectivity.select("cn_fk", pl.concat_str("eq_fk", "side").alias("id")), on="id", how="left"
-            )[["cn_fk", "name"]])
-        
-        resource = resource.with_columns(
-            c("feeder_fk").replace_strict(feeder_name_mapping, default=None).alias("feeder_name")
-        )
-
-    grid_dict: dict[str, pl.DataFrame] = {}
-    for concrete_class in resource["concrete_class"].unique().to_list():
-        grid_dict[concrete_class] = getattr(changes_schema, concrete_class).join(resource, on="uuid", how="inner")
-        if concrete_class == BRANCH:
-            grid_dict[concrete_class] = grid_dict[concrete_class].join(
-                changes_schema.branch_parameter_event.drop(["diff", "uuid", "timestamp", "heartbeat", "source_fk"]),
-                left_on="uuid", right_on="eq_fk", how="left", coalesce=True
-            )
-        if concrete_class == SWITCH:
-            grid_dict[concrete_class] = grid_dict[concrete_class].join(
-                changes_schema.switch_event[["eq_fk", "open"]],
-                left_on="uuid", right_on="eq_fk", how="left", coalesce=True
-            )
-    dict_to_gpkg(grid_dict, file_path=file_path)
-    if add_building_conn:
-        building_connection: pl.DataFrame = generate_building_connection(
-            connectivity=connectivity, resource=resource)
-        table_to_gpkg(table=building_connection, gpkg_file_name=file_path, layer_name="building_connection")
-
-def generate_building_connection(connectivity: pl.DataFrame, resource: pl.DataFrame) -> pl.DataFrame:
-    energy_consumer = resource\
-        .filter(c("concrete_class") == ENERGY_CONSUMER)\
-        .join(connectivity[["eq_fk", "container_fk"]], left_on="uuid", right_on="eq_fk", how="left")\
-        .join(
-            resource.select("uuid", c("geometry").alias("container_geo")), 
-            left_on="container_fk", right_on="uuid", how="left")
-
-    building_connection: pl.DataFrame = energy_consumer.drop_nulls("container_fk")\
-        .select(
-        "name",
-        pl.concat_list(["geometry", "container_geo"])
-        .pipe(point_list_to_linestring_col).alias("geometry"),
-        )
-    return building_connection
-
-
-def add_building_connection(changes_schema, file_path: str):
-    connectivity: pl.DataFrame = changes_schema.connectivity
-    geo: pl.DataFrame = changes_schema.geo_event
-    resource: pl.DataFrame = changes_schema.resource[["uuid", "concrete_class", "dso_code", "name", "feeder_fk", "metadata"]] 
-    geo = geo.select(
-            c("geo").pipe(geoalchemy2_to_wkt).alias("geometry"),
-            c("res_fk").alias("uuid")
-        )
-    resource: pl.DataFrame  = geo.join(resource, on="uuid", how="left")
-
-    energy_consumer = resource\
-        .filter(c("concrete_class") == ENERGY_CONSUMER)\
-        .join(connectivity[["eq_fk", "container_fk"]], left_on="uuid", right_on="eq_fk", how="left")\
-        .join(geo.rename({"geometry":"container_geo"}), left_on="container_fk", right_on="uuid", how="left")
-
-    building_connection: pl.DataFrame = energy_consumer.drop_nulls("container_fk")\
-        .select(
-        pl.concat_list(["geometry", "container_geo"])
-                .pipe(point_list_to_linestring_col).alias("geometry"),
-        "name"
-    )
-    table_to_gpkg(table=building_connection, gpkg_file_name=file_path, layer_name="building_connection")
-    

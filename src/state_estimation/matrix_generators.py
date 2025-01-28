@@ -15,7 +15,7 @@ log = generate_log(name=__name__)
 
 def generate_full_jacobian_matrix(distflow_schema: DistFlowSchema, slack_node_id: int)-> np.array: # type: ignore
     r"""
-    Generate the full Jacobian matrix for the given distribution flow schema.
+    Generate the full Jacobian matrix for the given distribution grid.
 
     Args:
         distflow_schema (DistFlowSchema): The schema containing the edge data for the distribution flow.
@@ -35,20 +35,26 @@ def generate_full_jacobian_matrix(distflow_schema: DistFlowSchema, slack_node_id
         :nowrap:
         
         \begin{align}
-        \Large{
+        \large{
             H(x)= \begin{bmatrix}
-                \frac{\partial P_\text{load}}{\partial P_\text{load}} & \frac{\partial P_\text{load}}{\partial Q_\text{load}} & 
-                \frac{\partial P_\text{load}}{\partial V_\text{0}^{2}} \\
-                \frac{\partial Q_\text{load}}{\partial P_\text{load}} & \frac{\partial Q_\text{load}}{\partial Q_\text{load}} & 
-                \frac{\partial Q_\text{load}}{\partial V_\text{0}^{2}} \\
-                \frac{\partial P_\text{flow}}{\partial P_\text{load}} & \frac{\partial P_\text{flow}}{\partial Q_\text{load}} & 
-                \frac{\partial P_\text{flow}}{\partial V_\text{0}^{2}} \\
-                \frac{\partial Q_\text{flow}}{\partial P_\text{load}} & \frac{\partial Q_\text{flow}}{\partial Q_\text{load}} & 
-                \frac{\partial Q_\text{flow}}{\partial V_\text{0}^{2}} \\
-                \frac{\partial V^{2}}{\partial P_\text{load}} & \frac{\partial V^{2}}{\partial Q_\text{load}} & 
-                \frac{\partial V^{2}}{\partial V_\text{0}^{2}} \\
-                \frac{\partial V_\text{0}^{2}}{\partial P_\text{load}} & \frac{\partial V_\text{0}^{2}}{\partial Q_\text{load}} & 
-                \frac{\partial V_\text{0}^{2}}{\partial V_\text{0}^{2}}
+                \frac{\partial \mathbf{P_\text{load}}}{\partial \mathbf{P_\text{load}}} & 
+                \frac{\partial \mathbf{P_\text{load}}}{\partial \mathbf{Q_\text{load}}} & 
+                \frac{\partial \mathbf{P_\text{load}}}{\partial \mathbf{V_\text{0}}^{2}} \\
+                \frac{\partial \mathbf{Q_\text{load}}}{\partial \mathbf{P_\text{load}}} & 
+                \frac{\partial \mathbf{Q_\text{load}}}{\partial \mathbf{Q_\text{load}}} & 
+                \frac{\partial \mathbf{Q_\text{load}}}{\partial \mathbf{V_\text{0}}^{2}} \\
+                \frac{\partial \mathbf{P_\text{flow}}}{\partial \mathbf{P_\text{load}}} & 
+                \frac{\partial \mathbf{P_\text{flow}}}{\partial \mathbf{Q_\text{load}}} & 
+                \frac{\partial \mathbf{P_\text{flow}}}{\partial \mathbf{V_\text{0}}^{2}} \\
+                \frac{\partial \mathbf{Q_\text{flow}}}{\partial \mathbf{P_\text{load}}} & 
+                \frac{\partial \mathbf{Q_\text{flow}}}{\partial \mathbf{Q_\text{load}}} & 
+                \frac{\partial \mathbf{Q_\text{flow}}}{\partial \mathbf{V_\text{0}}^{2}} \\
+                \frac{\partial \mathbf{V}^{2}}{\partial \mathbf{P_\text{load}}} & 
+                \frac{\partial \mathbf{V}^{2}}{\partial \mathbf{Q_\text{load}}} & 
+                \frac{\partial \mathbf{V}^{2}}{\partial \mathbf{V_\text{0}}^{2}} \\
+                \frac{\partial \mathbf{V_\text{0}}^{2}}{\partial \mathbf{P_\text{load}}} & 
+                \frac{\partial \mathbf{V_\text{0}}^{2}}{\partial \mathbf{Q_\text{load}}} & 
+                \frac{\partial \mathbf{V_\text{0}}^{2}}{\partial \mathbf{V_\text{0}}^{2}}
             \end{bmatrix}
         }
         \end{align}
@@ -57,8 +63,8 @@ def generate_full_jacobian_matrix(distflow_schema: DistFlowSchema, slack_node_id
         :nowrap:
         
         \begin{align}
-            \frac{\partial P_\text{load}}{\partial P_\text{load}} = 
-            \frac{\partial Q_\text{load}}{\partial Q_\text{load}} = I
+            \frac{\partial \mathbf{P_\text{load}}}{\partial \mathbf{P_\text{load}}} = 
+            \frac{\partial \mathbf{Q_\text{load}}}{\partial \mathbf{Q_\text{load}}} = \mathbf{I}
         \end{align}
     
 
@@ -69,7 +75,7 @@ def generate_full_jacobian_matrix(distflow_schema: DistFlowSchema, slack_node_id
             \frac{\partial P_\text{flow}^{i}}{\partial P_\text{load}^{j}} = 
             \frac{\partial Q_\text{flow}^{i}}{\partial Q_\text{load}^{j}} = 
             \begin{cases}
-                1 &\text{if node } i \text{ is downstream node } j \\
+                1 &\text{if node } j \text{ is downstream node } i \\
                 0 &\text{otherwise}
             \end{cases}
         \end{align}
@@ -111,7 +117,7 @@ def generate_full_jacobian_matrix(distflow_schema: DistFlowSchema, slack_node_id
         :nowrap:
         
         \begin{align}
-            \frac{\partial V^{2}}{\partial V_\text{0}^{2}} = - \displaystyle\prod_{m \in M} N_{m}
+            \frac{\partial V_{i}^{2}}{\partial V_\text{0}^{2}} = - \displaystyle\prod_{m \in M} N_{m}
         \end{align} 
     
     
@@ -121,10 +127,14 @@ def generate_full_jacobian_matrix(distflow_schema: DistFlowSchema, slack_node_id
         :nowrap:
         
         \begin{align}
-            \frac{\partial P_\text{load}}{\partial Q_\text{load}},\frac{\partial Q_\text{load}}{\partial P_\text{load}},
-            \frac{\partial P_\text{load}}{\partial V_\text{0}^{2}}, \frac{\partial Q_\text{load}}{\partial V_\text{0}^{2}}, 
-            \frac{\partial P_\text{flow}}{\partial Q_\text{load}}, \frac{\partial Q_\text{flow}}{\partial P_\text{load}}, 
-            \frac{\partial V_\text{0}^{2}}{\partial P_\text{load}}, \frac{\partial V_\text{0}^{2}}{\partial Q_\text{load}}= {0}
+            \frac{\partial \mathbf{P_\text{load}}}{\partial \mathbf{Q_\text{load}}},
+            \frac{\partial \mathbf{Q_\text{load}}}{\partial \mathbf{P_\text{load}}},
+            \frac{\partial \mathbf{P_\text{load}}}{\partial \mathbf{V_\text{0}}^{2}},
+            \frac{\partial \mathbf{Q_\text{load}}}{\partial \mathbf{V_\text{0}}^{2}},
+            \frac{\partial \mathbf{P_\text{flow}}}{\partial \mathbf{Q_\text{load}}},
+            \frac{\partial \mathbf{Q_\text{flow}}}{\partial \mathbf{P_\text{load}}},
+            \frac{\partial \mathbf{V_\text{0}}^{2}}{\partial \mathbf{P_\text{load}}},
+            \frac{\partial \mathbf{V_\text{0}}^{2}}{\partial \mathbf{Q_\text{load}}} = \mathbf{0}
         \end{align} 
     
     """
@@ -134,10 +144,10 @@ def generate_full_jacobian_matrix(distflow_schema: DistFlowSchema, slack_node_id
     # Check if there is no parallel edges (nx.Graph does not support parallel edges instead of nx.MultiGraph)
     if not edge_data.filter(pl.struct("u_of_edge", "v_of_edge").is_duplicated()).is_empty():
         raise ValueError("Edges in parallel in edge_data")
+    
     # check if the slack node is in the grid
     if edge_data.filter(pl.any_horizontal(c("u_of_edge", "v_of_edge")== 0)).is_empty():
         raise ValueError("The slack node is not in the grid")
-    
     # Create nx_tree from line data
     nx_grid: nx.Graph = nx.Graph()
     _ = edge_data\
@@ -211,7 +221,8 @@ def generate_full_jacobian_matrix(distflow_schema: DistFlowSchema, slack_node_id
         .to_dense(fill_value=0.0)
         ).reshape(-1, 1)# type: ignore
         
-    # Matrix value is the multiplication of transformer ratio found in upstream edge (for switch and branch, n_transfo == 1)
+    # Matrix value is the multiplication of transformer ratio found in upstream edge
+    # (for switch and branch, n_transfo == 1)
     vn_v0 = (
         descendent_matrix.T[nodes, nodes]  # type: ignore
         .ewise_mult(n_transfo) # type: ignore
