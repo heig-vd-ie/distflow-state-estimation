@@ -28,7 +28,7 @@ def generate_full_jacobian_matrix(distflow_schema: DistFlowSchema, slack_node_id
         ValueError: If edge_data is empty, contains parallel edges, or if the slack node is not in the grid.
         ValueError: If the grid is not a connected tree.
         
-    The Jacobian matrix is a block matrix with the following structure:
+    The Jacobian matrix is a block matrix defined on equation :eq:`jacobian-matrix`:
     
     .. math::
         :label: jacobian-matrix
@@ -146,7 +146,7 @@ def generate_full_jacobian_matrix(distflow_schema: DistFlowSchema, slack_node_id
         raise ValueError("Edges in parallel in edge_data")
     
     # check if the slack node is in the grid
-    if edge_data.filter(pl.any_horizontal(c("u_of_edge", "v_of_edge")== 0)).is_empty():
+    if edge_data.filter(pl.any_horizontal(c("u_of_edge", "v_of_edge")== slack_node_id)).is_empty():
         raise ValueError("The slack node is not in the grid")
     # Create nx_tree from line data
     nx_grid: nx.Graph = nx.Graph()
@@ -170,7 +170,7 @@ def generate_full_jacobian_matrix(distflow_schema: DistFlowSchema, slack_node_id
     n_edges: int = nx_tree_grid.number_of_edges()
     
     descendent_matrix = generate_shortest_path_length_matrix(nx_grid = nx_tree_grid, forced_weight=1)
-    
+    print(descendent_matrix)
     # Create edge data graphblas vector
     g_pu = gb.Vector.from_dense(edge_data["g_pu"]) # type: ignore
     b_pu = gb.Vector.from_dense(edge_data["b_pu"]) # type: ignore
@@ -244,7 +244,9 @@ def generate_full_jacobian_matrix(distflow_schema: DistFlowSchema, slack_node_id
     h = np.concatenate([
         np.concatenate([sload_sload, sload_v0], axis=1),
         np.concatenate([pflow_pload, pflow_qload, pflow_v0], axis=1),
+
         np.concatenate([qflow_pload, qflow_qload, qflow_v0], axis=1),
+
         np.concatenate([vn_pload, vn_qload, vn_v0], axis=1),
         np.concatenate([v0_sload, v0_v0], axis=1),
     ], axis=0)
