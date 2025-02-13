@@ -1,13 +1,19 @@
+"""
+
+
+
+"""
+
+
 import polars as pl
 from polars import col as c
 import networkx as nx
 import numpy as np
-import time
 from copy import deepcopy
 from typing import Union, Literal
 import graphblas as gb
 from networkx_function import (
-    generate_nx_edge, generate_tree_graph_from_edge_data, get_all_edge_data, generate_shortest_path_length_matrix)
+    generate_tree_graph_from_edge_data, get_all_edge_data, generate_shortest_path_length_matrix)
 from general_function import generate_log
 
 log = generate_log(name=__name__)
@@ -29,20 +35,20 @@ class DistFlow():
         
         self.g_gb: gb.Matrix # type: ignore
         self.h_gb: gb.Matrix # type: ignore
-        self.v_in_sq_gb: gb.Vector # type: ignore
+        self.v_in_sqr_gb: gb.Vector # type: ignore
         self.dv_prop_gb: gb.Vector # type: ignore
         self.z_gb: gb.Vector # type: ignore
         self.z_conj_gb: gb.Vector # type: ignore
-        self.z_sq_gb: gb.Vector # type: ignore
+        self.z_sqr_gb: gb.Vector # type: ignore
         self.y_gb: gb.Vector # type: ignore
         
         self.g_np: np.array # type: ignore
         self.h_np: np.array # type: ignore
-        self.v_in_sq_np: np.array # type: ignore
+        self.v_in_sqr_np: np.array # type: ignore
         self.dv_prop_np: np.array # type: ignore
         self.z_np: np.array # type: ignore
         self.z_conj_np: np.array # type: ignore
-        self.z_sq_np: np.array # type: ignore
+        self.z_sqr_np: np.array # type: ignore
         self.y_np: np.array # type: ignore
         
         self.generate_node_index()
@@ -96,7 +102,7 @@ class DistFlow():
         # generate numpy arrays for impedance and admittance of each node
         self.z_gb: gb.Vector = gb.Vector.from_dense(self.node_parameters["r_pu"].to_numpy() + 1j*self.node_parameters["x_pu"].to_numpy())  # type: ignore
         self.z_conj_gb: gb.Vector = self.z_gb.apply(gb.unary.conj).dup()  # type: ignore
-        self.z_sq_gb: gb.Vector = self.z_gb.apply(gb.unary.abs)**2  # type: ignore
+        self.z_sqr_gb: gb.Vector = self.z_gb.apply(gb.unary.abs)**2  # type: ignore
         self.y_gb: gb.Vector = gb.Vector.from_dense(self.node_parameters["g_tra_pu"].to_numpy() + 1j*self.node_parameters["b_tra_pu"].to_numpy()) # type: ignore
     
     def generate_connections_matrix(self):
@@ -108,7 +114,7 @@ class DistFlow():
         n_transfo = gb.Vector.from_dense(self.node_parameters["n_transfo"].to_numpy(), dtype=float) # type: ignore
         idx_trafo = self.node_parameters.filter(c("n_transfo") != 1)["node_id"].to_list()
         self.dv_prop_gb: gb.Matrix = self.h_gb.T.dup() # type: ignore
-        self.v_in_sq_gb = self.dv_prop_gb.ewise_mult(n_transfo).reduce_rowwise("times").dup()
+        self.v_in_sqr_gb = self.dv_prop_gb.ewise_mult(n_transfo).reduce_rowwise("times").dup()
         n_transfo = gb.select.offdiag(self.h_gb).ewise_mult(n_transfo)[:, idx_trafo].T.dup() # type: ignore
         n_transfo = gb.Matrix.from_dense(n_transfo.to_dense(fill_value= 1)) # type: ignore
         for i, idx in enumerate(idx_trafo):
@@ -118,128 +124,128 @@ class DistFlow():
     def graphblas_to_numpy(self):
         self.g_np = self.g_gb.to_dense(fill_value=0.0)
         self.h_np = self.h_gb.to_dense(fill_value=0.0)
-        self.v_in_sq_np = self.v_in_sq_gb.to_dense()
+        self.v_in_sqr_np = self.v_in_sqr_gb.to_dense()
         self.dv_prop_np = self.dv_prop_gb.to_dense(fill_value=0.0)
         self.z_np = self.z_gb.to_dense()
         self.z_conj_np = self.z_conj_gb.to_dense()
-        self.z_sq_np = self.z_sq_gb.to_dense()
+        self.z_sqr_np = self.z_sqr_gb.to_dense()
         self.y_np = self.y_gb.to_dense()
         
     def distflow_algorithm(
-        self, s_node: np.array, v0_sq: np.array, engine: Literal["numpy", "graphblas"] = "graphblas"): # type: ignore
+        self, s_node: np.array, v0_sqr: np.array, engine: Literal["numpy", "graphblas"] = "graphblas"): # type: ignore
         
         if engine == "numpy":
-            s_up, v_sq_update, i_sq_update = self.distflow_algorithm_np(s_node, v0_sq)
+            s_up, v_sqr_update, i_sqr_update = self.distflow_algorithm_np(s_node, v0_sqr)
         elif engine == "graphblas":
-            s_up_gb, v_sq_update_gb, i_sq_update_gb = self.distflow_algorithm_gb(
-                gb.Vector.from_dense(s_node), gb.Vector.from_dense(v0_sq) # type: ignore
+            s_up_gb, v_sqr_update_gb, i_sqr_update_gb = self.distflow_algorithm_gb(
+                gb.Vector.from_dense(s_node), gb.Vector.from_dense(v0_sqr) # type: ignore
             )
             s_up = s_up_gb.to_dense()
-            v_sq_update = v_sq_update_gb.to_dense()
-            i_sq_update = i_sq_update_gb.to_dense()
+            v_sqr_update = v_sqr_update_gb.to_dense()
+            i_sqr_update = i_sqr_update_gb.to_dense()
         else:
             raise ValueError("The engine parameter must be either 'numpy' or 'graphblas'")
         
         if self.idx == self.max_iter:
             log.error("The algorithm did not converge after {} iterations".format(self.max_iter))
             
-        return s_up, v_sq_update, i_sq_update
+        return s_up, v_sqr_update, i_sqr_update
         
     def distflow_algorithm_gb(
-        self, s_node: gb.Vector, v0_sq: gb.Vector # type: ignore
+        self, s_node: gb.Vector, v0_sqr: gb.Vector # type: ignore
             ): # type: ignore
         # State variable initialization
-        v_sq = v0_sq.dup()
-        i_sq = gb.Vector.from_dense(np.zeros(len(self.node_id_to_nb_mapping))) # type: ignore
+        v_sqr = v0_sqr.dup()
+        i_sqr = gb.Vector.from_dense(np.zeros(len(self.node_id_to_nb_mapping))) # type: ignore
         s_up = self.h_gb.mxv(s_node)
         for idx in range(self.max_iter):
             # Update downstream side line power flow
-            s_down = self.g_gb.mxv(s_up).ewise_add(s_node).ewise_add(v_sq.ewise_mult(self.y_gb))
+            s_down = self.g_gb.mxv(s_up).ewise_add(s_node).ewise_add(v_sqr.ewise_mult(self.y_gb))
             # Update squared current
-            i_sq_update = (s_down.apply(gb.unary.abs)**2).ewise_mult(1/v_sq) # type: ignore
+            i_sqr_update = (s_down.apply(gb.unary.abs)**2).ewise_mult(1/v_sqr) # type: ignore
             # Update upstream side line power flow
-            s_up = i_sq_update.ewise_mult(self.z_gb).ewise_add(s_down)
+            s_up = i_sqr_update.ewise_mult(self.z_gb).ewise_add(s_down)
             # Update squared voltage drop
-            dv_sq = self.z_sq_gb.ewise_mult(i_sq_update).ewise_add(-2* self.z_conj_gb.ewise_mult(s_up).apply(gb.unary.creal)) # type: ignore
+            dv_sqr = self.z_sqr_gb.ewise_mult(i_sqr_update).ewise_add(-2* self.z_conj_gb.ewise_mult(s_up).apply(gb.unary.creal)) # type: ignore
             # Update squared node voltage 
-            v_sq_update = v0_sq.ewise_add(self.dv_prop_gb.mxv(dv_sq))
+            v_sqr_update = v0_sqr.ewise_add(self.dv_prop_gb.mxv(dv_sqr))
             # Check convergence
-            diff_i = i_sq.ewise_add(-i_sq_update).ewise_mult(1/i_sq_update).apply(gb.unary.abs).reduce(gb.binary.max) # type: ignore
-            diff_u = v_sq.ewise_add(-v_sq_update).ewise_mult(1/v_sq_update).apply(gb.unary.abs).reduce(gb.binary.max) # type: ignore
+            diff_i = i_sqr.ewise_add(-i_sqr_update).ewise_mult(1/i_sqr_update).apply(gb.unary.abs).reduce(gb.binary.max) # type: ignore
+            diff_u = v_sqr.ewise_add(-v_sqr_update).ewise_mult(1/v_sqr_update).apply(gb.unary.abs).reduce(gb.binary.max) # type: ignore
             if (diff_u < self.tol) & (diff_i < self.tol):
                 break
             else:
-                v_sq = v_sq_update.dup()
-                i_sq = i_sq_update.dup()
+                v_sqr = v_sqr_update.dup()
+                i_sqr = i_sqr_update.dup()
         self.idx = idx
         if self.idx == self.max_iter:
             log.error("The algorithm did not converge after {} iterations".format(self.max_iter))
-        return s_up, v_sq_update, i_sq_update
+        return s_up, v_sqr_update, i_sqr_update
         
     def distflow_algorithm_np(
-        self, s_node: np.array, v0_sq: np.array # type: ignore
+        self, s_node: np.array, v0_sqr: np.array # type: ignore
         ):
         # State variable initialization
-        v_sq: np.array = deepcopy(v0_sq) # type: ignore
-        i_sq: np.array = np.zeros_like(v_sq) # type: ignore
+        v_sqr: np.array = deepcopy(v0_sqr) # type: ignore
+        i_sqr: np.array = np.zeros_like(v_sqr) # type: ignore
         s_up: np.array = np.matmul(self.h_np, s_node) # type: ignore
         for idx in range(self.max_iter):
             # Update downstream side line power flow
-            s_down: np.array = np.matmul(self.g_np, s_up) + s_node + np.multiply(v_sq, self.y_np) # type: ignore
+            s_down: np.array = np.matmul(self.g_np, s_up) + s_node + np.multiply(v_sqr, self.y_np) # type: ignore
             # Update squared current
-            i_sq_update: np.array = np.absolute(s_down)**2/v_sq # type: ignore
+            i_sqr_update: np.array = np.absolute(s_down)**2/v_sqr # type: ignore
             # Update upstream side line power flow
-            s_up = i_sq_update*self.z_np + s_down
+            s_up = i_sqr_update*self.z_np + s_down
             # Update squared voltage drop
-            dv_sq: np.array = -2*np.real(np.multiply(self.z_conj_np, s_up)) + np.multiply(self.z_sq_np, i_sq_update) # type: ignore
+            dv_sqr: np.array = -2*np.real(np.multiply(self.z_conj_np, s_up)) + np.multiply(self.z_sqr_np, i_sqr_update) # type: ignore
             # Update squared node voltage 
-            v_sq_update: np.array = v0_sq + np.matmul(self.dv_prop_np, dv_sq) # type: ignore
+            v_sqr_update: np.array = v0_sqr + np.matmul(self.dv_prop_np, dv_sqr) # type: ignore
             # Check convergence
-            if max((np.abs(v_sq - v_sq_update)/v_sq_update).max(), (np.abs(i_sq - i_sq_update)/i_sq_update).max()) < self.tol:
+            if max((np.abs(v_sqr - v_sqr_update)/v_sqr_update).max(), (np.abs(i_sqr - i_sqr_update)/i_sqr_update).max()) < self.tol:
                 break
             else:
-                v_sq = deepcopy(v_sq_update)
-                i_sq = deepcopy(i_sq_update)
+                v_sqr = deepcopy(v_sqr_update)
+                i_sqr = deepcopy(i_sqr_update)
         self.idx = idx
         if self.idx == self.max_iter:
             log.error("The algorithm did not converge after {} iterations".format(self.max_iter))
-        return s_up, v_sq_update, i_sq_update
+        return s_up, v_sqr_update, i_sqr_update
     
     def timeseries_distflow_algorithm(
-        self, s_node: np.array,  v_ext_grid_sq: Union[float, np.array] = 1.0, # type: ignore
+        self, s_node: np.array,  v_ext_grid_sqr: Union[float, np.array] = 1.0, # type: ignore
         engine: Literal["numpy", "graphblas"] = "graphblas"
         ): # type: ignore
         
         if np.shape(s_node)[1] != len(self.node_list):
             raise ValueError("Power values must have the same length as the node list.")
-        if isinstance(v_ext_grid_sq, float):
-            v_ext_grid_sq = np.array([v_ext_grid_sq]*np.shape(s_node)[0])
+        if isinstance(v_ext_grid_sqr, float):
+            v_ext_grid_sqr = np.array([v_ext_grid_sqr]*np.shape(s_node)[0])
         else:
-            if np.shape(v_ext_grid_sq)[0] != np.shape(s_node)[0]:
+            if np.shape(v_ext_grid_sqr)[0] != np.shape(s_node)[0]:
                 raise ValueError("External grid voltage values must have the same length as powers.")
-        v0_sq: np.array = self.v_in_sq_np * v_ext_grid_sq.reshape(np.shape(v_ext_grid_sq)[0], 1) # type: ignore
+        v0_sqr: np.array = self.v_in_sqr_np * v_ext_grid_sqr.reshape(np.shape(v_ext_grid_sqr)[0], 1) # type: ignore
         
         if engine == "numpy":
             s_flow: np.array = np.zeros_like(s_node, dtype= np.complex128) # type: ignore
-            v_sq: np.array = np.zeros_like(s_node, dtype= np.float64) # type: ignore
-            i_sq: np.array = np.zeros_like(s_node, dtype= np.float64) # type: ignore
+            v_sqr: np.array = np.zeros_like(s_node, dtype= np.float64) # type: ignore
+            i_sqr: np.array = np.zeros_like(s_node, dtype= np.float64) # type: ignore
             for idx in range(np.shape(s_node)[0]):
-                s_flow[idx, :], v_sq[idx, :], i_sq[idx, :] = self.distflow_algorithm_np(s_node[idx, :], v0_sq[idx, :])  
+                s_flow[idx, :], v_sqr[idx, :], i_sqr[idx, :] = self.distflow_algorithm_np(s_node[idx, :], v0_sqr[idx, :])  
                 
         elif engine == "graphblas":
             s_node_gb: gb.Matrix = gb.Matrix.from_dense(s_node) # type: ignore
-            v0_sq_gb: gb.Matrix = gb.Matrix.from_dense(v0_sq) # type: ignore
+            v0_sqr_gb: gb.Matrix = gb.Matrix.from_dense(v0_sqr) # type: ignore
             nrows, ncols = np.shape(s_node)
             s_flow_gb: gb.Matrix = gb.Matrix(dtype=np.complex128, nrows=nrows, ncols=ncols) # type: ignore
-            v_sq_gb: gb.Matrix = gb.Matrix(dtype=float, nrows=nrows, ncols=ncols) # type: ignore
-            i_sq_gb: gb.Matrix = gb.Matrix(dtype=float, nrows=nrows, ncols=ncols) # type: ignore
+            v_sqr_gb: gb.Matrix = gb.Matrix(dtype=float, nrows=nrows, ncols=ncols) # type: ignore
+            i_sqr_gb: gb.Matrix = gb.Matrix(dtype=float, nrows=nrows, ncols=ncols) # type: ignore
             for idx in range(np.shape(s_node)[0]):
-                s_flow_gb[idx, :], v_sq_gb[idx, :], i_sq_gb[idx, :] = self.distflow_algorithm_np(
-                    s_node_gb[idx, :], v0_sq_gb[idx, :]) 
+                s_flow_gb[idx, :], v_sqr_gb[idx, :], i_sqr_gb[idx, :] = self.distflow_algorithm_np(
+                    s_node_gb[idx, :], v0_sqr_gb[idx, :]) 
                 
             s_flow = s_flow_gb.to_dense()
-            v_sq = v_sq_gb.to_dense()
-            i_sq = i_sq_gb.to_dense()
+            v_sqr = v_sqr_gb.to_dense()
+            i_sqr = i_sqr_gb.to_dense()
         else:
             raise ValueError("The engine parameter must be either 'numpy' or 'graphblas'")                
-        return s_flow, v_sq, i_sq
+        return s_flow, v_sqr, i_sqr
