@@ -1,0 +1,460 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="246.95592mm"
+   height="80.472969mm"
+   viewBox="0 0 246.95592 80.472969"
+   version="1.1"
+   id="svg1"
+   inkscape:version="1.4 (86a8ad7, 2024-10-11)"
+   sodipodi:docname="20250212_Schema_PI_distflow_TFD_v0-0.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:dc="http://purl.org/dc/elements/1.1/">
+  <title
+     id="title1">PI-equivalent circuit of a transmission line for DistFlowSchema</title>
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#999999"
+     borderopacity="1"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm"
+     inkscape:zoom="1.0093364"
+     inkscape:cx="134.24662"
+     inkscape:cy="342.30411"
+     inkscape:window-width="2560"
+     inkscape:window-height="1351"
+     inkscape:window-x="-9"
+     inkscape:window-y="-9"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="g51"
+     showgrid="true"
+     showguides="true">
+    <inkscape:grid
+       id="grid1"
+       units="mm"
+       originx="38.640331"
+       originy="-24.088216"
+       spacingx="0.99999998"
+       spacingy="1"
+       empcolor="#0099e5"
+       empopacity="0.30196078"
+       color="#0099e5"
+       opacity="0.14901961"
+       empspacing="5"
+       enabled="true"
+       visible="true" />
+    <sodipodi:guide
+       position="38.640331,74.561179"
+       orientation="0,-1"
+       id="guide42"
+       inkscape:locked="false" />
+    <sodipodi:guide
+       position="135.10635,4.5611896"
+       orientation="0,-1"
+       id="guide45"
+       inkscape:locked="false" />
+    <inkscape:page
+       x="0"
+       y="0"
+       width="246.95592"
+       height="80.472969"
+       id="page2"
+       margin="0"
+       bleed="0" />
+  </sodipodi:namedview>
+  <defs
+     id="defs1" />
+  <metadata
+     id="metadata1">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:title>PI-equivalent circuit of a transmission line for DistFlowSchema</dc:title>
+        <dc:date>2025.02.12</dc:date>
+        <dc:creator>
+          <cc:Agent>
+            <dc:title>Thierry Fracheboud</dc:title>
+          </cc:Agent>
+        </dc:creator>
+        <dc:description>PI-equivalent circuit of a transmission line for DistFlowSchema in Matrix generator documentation</dc:description>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <rect
+     style="fill:none;stroke:#000000;stroke-width:0.529168"
+     id="rect4"
+     width="30.000093"
+     height="12.000036"
+     x="89.006927"
+     y="35.911785"
+     inkscape:export-filename="images\pi_distflow_schema.svg"
+     inkscape:export-xdpi="96"
+     inkscape:export-ydpi="96" />
+  <path
+     style="fill:none;stroke:#000000;stroke-width:1.229;stroke-dasharray:none"
+     d="M 198.64033,19.911784 V 63.91192"
+     id="path4" />
+  <path
+     style="fill:none;stroke:#000000;stroke-width:1.229;stroke-dasharray:none"
+     d="M 8.6399455,19.911737 V 63.911873"
+     id="path5" />
+  <path
+     style="fill:none;stroke:#000000;stroke-width:0.452309"
+     d="M 8.6399455,41.911803 H 89.006923"
+     id="path6" />
+  <path
+     style="fill:none;stroke:#000000;stroke-width:0.527954"
+     d="m 119.00698,41.911803 h 79.63335"
+     id="path7" />
+  <g
+     id="g13"
+     inkscape:label="capa"
+     transform="translate(43.931998,-24.088215)">
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.529168"
+       d="M 5.9997292,66.000018 V 80.00006"
+       id="path8" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.458273"
+       d="M 11.999749,80.00006 H -2.8977896e-4"
+       id="path9" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.458273"
+       d="M 11.999749,84.000078 H -2.8977896e-4"
+       id="path9-1" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.529168"
+       d="m 5.9997292,84.000078 v 12.00003"
+       id="path10" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.483075"
+       d="M 0.99945697,96.000108 H 11"
+       id="path11" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.458293"
+       d="m 2.9994512,98.000118 h 6.000549"
+       id="path12" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.374229"
+       d="m 4.9994552,100.00013 h 2.000545"
+       id="path13" />
+  </g>
+  <g
+     id="g20"
+     inkscape:label="capa"
+     transform="translate(150.94054,-24.088277)">
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.529168"
+       d="M 5.9997292,66.000018 V 80.00006"
+       id="path14" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.458273"
+       d="M 11.999749,80.00006 H -2.8977896e-4"
+       id="path15" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.458273"
+       d="M 11.999749,84.000078 H -2.8977896e-4"
+       id="path16" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.529168"
+       d="m 5.9997292,84.000078 v 12.00003"
+       id="path17" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.483075"
+       d="M 0.99945697,96.000108 H 11"
+       id="path18" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.458293"
+       d="m 2.9994512,98.000118 h 6.000549"
+       id="path19" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.374229"
+       d="m 4.9994552,100.00013 h 2.000545"
+       id="path20" />
+  </g>
+  <text
+     xml:space="preserve"
+     style="font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:8.46667px;font-family:Cambria;-inkscape-font-specification:'Cambria, Italic';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;text-align:start;writing-mode:lr-tb;direction:ltr;text-anchor:start;fill:#000000;stroke:none;stroke-width:0.499999;stroke-dasharray:none"
+     x="61.815334"
+     y="61.130436"
+     id="text21"><tspan
+       sodipodi:role="line"
+       id="tspan21"
+       style="stroke-width:0.5"
+       x="61.815334"
+       y="61.130436">B<tspan
+   style="font-size:65%;baseline-shift:sub"
+   id="tspan37">j</tspan><tspan
+   style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:8.46667px;font-family:Cambria;-inkscape-font-specification:'Cambria, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal"
+   id="tspan23">/</tspan>2</tspan></text>
+  <g
+     id="g3"
+     inkscape:label="flowup"
+     transform="translate(41.286165,-24.088215)">
+    <g
+       id="g2"
+       transform="translate(-30.437263,23.059844)"
+       inkscape:label="p">
+      <text
+         xml:space="preserve"
+         style="font-size:8.46667px;font-family:Cambria;-inkscape-font-specification:'Cambria, Normal';text-align:start;word-spacing:0px;writing-mode:lr-tb;direction:ltr;text-anchor:start;fill:#000000;stroke-width:0.499999"
+         x="9.8567533"
+         y="37.612038"
+         id="text1"><tspan
+           sodipodi:role="line"
+           id="tspan1"
+           style="font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:6.985px;font-family:Cambria;-inkscape-font-specification:'Cambria, Italic';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;word-spacing:0px;stroke-width:0.5"
+           x="9.8567533"
+           y="37.612038"
+           rotate="0 0">S<tspan
+   style="font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:65%;font-family:Cambria;-inkscape-font-specification:'Cambria, Italic';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;word-spacing:0px;baseline-shift:sub"
+   id="tspan2"
+   rotate="0 0 0 0 0">flow</tspan></tspan></text>
+      <path
+         style="fill:none;stroke:#000000;stroke-width:0.4;stroke-dasharray:none"
+         d="M 10.241035,32.427341 22,32.470833"
+         id="path2" />
+    </g>
+    <path
+       style="fill:#000000;stroke:none;stroke-width:0.202667;stroke-dasharray:none"
+       d="m -16.645834,64.000064 v 3.999912 l 3.208963,-1.999956 z"
+       id="path3" />
+  </g>
+  <g
+     id="g28"
+     inkscape:label="flowdown"
+     transform="translate(194.06514,-24.088215)">
+    <g
+       id="g25"
+       transform="translate(-30.437263,22.530677)"
+       inkscape:label="p">
+      <text
+         xml:space="preserve"
+         style="font-size:8.46667px;font-family:Cambria;-inkscape-font-specification:'Cambria, Normal';text-align:start;word-spacing:0px;writing-mode:lr-tb;direction:ltr;text-anchor:start;fill:#000000;stroke-width:0.499999"
+         x="9.8567533"
+         y="37.612038"
+         id="text25"><tspan
+           sodipodi:role="line"
+           id="tspan25"
+           style="font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:6.985px;font-family:Cambria;-inkscape-font-specification:'Cambria, Italic';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;word-spacing:0px;stroke-width:0.5"
+           x="9.8567533"
+           y="37.612038"
+           dx="0"
+           rotate="0 0">S<tspan
+   style="font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:65%;font-family:Cambria;-inkscape-font-specification:'Cambria, Italic';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;word-spacing:0px;baseline-shift:sub"
+   id="tspan24"
+   rotate="0 0 0 0 0">flow</tspan></tspan></text>
+      <path
+         style="fill:none;stroke:#000000;stroke-width:0.4;stroke-dasharray:none"
+         d="M 10.241035,40.448364 22,40.491856"
+         id="path25" />
+    </g>
+    <path
+       style="fill:#000000;stroke:none;stroke-width:0.202667;stroke-dasharray:none"
+       d="m -13.436871,64.000064 v 3.999912 l -3.208963,-1.999956 z"
+       id="path26" />
+  </g>
+  <text
+     xml:space="preserve"
+     style="font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:8.46667px;font-family:Cambria;-inkscape-font-specification:'Cambria, Italic';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;text-align:start;writing-mode:lr-tb;direction:ltr;text-anchor:start;fill:#000000;stroke:none;stroke-width:0.499999;stroke-dasharray:none"
+     x="130.70844"
+     y="61.130436"
+     id="text30"><tspan
+       sodipodi:role="line"
+       id="tspan30"
+       style="stroke-width:0.5"
+       x="130.70844"
+       y="61.130436">B<tspan
+   style="font-size:65%;baseline-shift:sub"
+   id="tspan36">j</tspan><tspan
+   style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:8.46667px;font-family:Cambria;-inkscape-font-specification:'Cambria, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal"
+   id="tspan29">/</tspan>2</tspan></text>
+  <text
+     xml:space="preserve"
+     style="font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:8.46667px;font-family:Cambria;-inkscape-font-specification:'Cambria, Italic';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;text-align:start;writing-mode:lr-tb;direction:ltr;text-anchor:start;fill:#000000;stroke:none;stroke-width:0.499999;stroke-dasharray:none"
+     x="102.70235"
+     y="30.55485"
+     id="text30-9"><tspan
+       sodipodi:role="line"
+       id="tspan30-3"
+       style="stroke-width:0.5"
+       x="102.70235"
+       y="30.55485">Z<tspan
+   style="font-size:65%;baseline-shift:sub"
+   id="tspan36-1">j</tspan></tspan></text>
+  <text
+     xml:space="preserve"
+     style="font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:8.46667px;font-family:Cambria;-inkscape-font-specification:'Cambria, Italic';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;text-align:start;writing-mode:lr-tb;direction:ltr;text-anchor:start;fill:#000000;stroke:none;stroke-width:0.499999;stroke-dasharray:none"
+     x="214.31995"
+     y="78.733955"
+     id="text30-1"><tspan
+       sodipodi:role="line"
+       style="stroke-width:0.5"
+       x="214.31995"
+       y="78.733955"
+       id="tspan38">S<tspan
+   style="font-size:65%;baseline-shift:super"
+   id="tspan43">j</tspan><tspan
+   style="font-size:65%;baseline-shift:sub"
+   id="tspan44">load</tspan></tspan></text>
+  <text
+     xml:space="preserve"
+     style="font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:6.985px;font-family:Cambria;-inkscape-font-specification:'Cambria, Italic';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;text-align:start;word-spacing:0px;writing-mode:lr-tb;direction:ltr;text-anchor:start;fill:#000000;stroke:none;stroke-width:0.4;stroke-dasharray:none"
+     x="5.6863289"
+     y="74.514778"
+     id="text31"><tspan
+       sodipodi:role="line"
+       id="tspan31"
+       style="stroke-width:0.4"
+       x="5.6863289"
+       y="74.514778">V<tspan
+   style="font-size:65%;baseline-shift:sub"
+   id="tspan32">i</tspan></tspan></text>
+  <text
+     xml:space="preserve"
+     style="font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:6.985px;font-family:Cambria;-inkscape-font-specification:'Cambria, Italic';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;text-align:start;word-spacing:0px;writing-mode:lr-tb;direction:ltr;text-anchor:start;fill:#000000;stroke:none;stroke-width:0.4;stroke-dasharray:none"
+     x="195.6834"
+     y="73.523819"
+     id="text34"><tspan
+       sodipodi:role="line"
+       id="tspan34"
+       style="stroke-width:0.4"
+       x="195.6834"
+       y="73.523819">V<tspan
+   style="font-size:65%;baseline-shift:sub"
+   id="tspan33">j</tspan></tspan></text>
+  <text
+     xml:space="preserve"
+     style="font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:8.46667px;font-family:Cambria;-inkscape-font-specification:'Cambria, Italic';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;text-align:start;writing-mode:lr-tb;direction:ltr;text-anchor:start;fill:#000000;stroke:none;stroke-width:0.5;stroke-dasharray:none"
+     x="-0.35966858"
+     y="5.9117842"
+     id="text20"
+     inkscape:label="node_i"
+     inkscape:export-filename="images\pi_distflow_schema.svg"
+     inkscape:export-xdpi="96"
+     inkscape:export-ydpi="96"><tspan
+       sodipodi:role="line"
+       id="tspan20"
+       style="font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:8.46667px;font-family:Cambria;-inkscape-font-specification:'Cambria, Italic';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;stroke:none;stroke-width:0.5;stroke-dasharray:none"
+       x="-0.35966858"
+       y="5.9117842">node i</tspan></text>
+  <text
+     xml:space="preserve"
+     style="font-size:8.46667px;font-family:Cambria;-inkscape-font-specification:'Cambria, Normal';text-align:start;word-spacing:0px;writing-mode:lr-tb;direction:ltr;text-anchor:start;fill:#000000;stroke-width:0.499999"
+     x="94.640335"
+     y="5.9117842"
+     id="text1-8"
+     inkscape:label="branch_j"><tspan
+       sodipodi:role="line"
+       id="tspan1-2"
+       style="font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:6.985px;font-family:Cambria;-inkscape-font-specification:'Cambria, Italic';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;word-spacing:0px;stroke-width:0.5"
+       x="94.640335"
+       y="5.9117842">Branch j</tspan></text>
+  <text
+     xml:space="preserve"
+     style="font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:8.46667px;font-family:Cambria;-inkscape-font-specification:'Cambria, Italic';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;text-align:start;writing-mode:lr-tb;direction:ltr;text-anchor:start;fill:#000000;stroke:none;stroke-width:0.5;stroke-dasharray:none"
+     x="189.37897"
+     y="5.9117842"
+     id="text35"
+     inkscape:label="node_j"><tspan
+       sodipodi:role="line"
+       id="tspan35"
+       style="font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:8.46667px;font-family:Cambria;-inkscape-font-specification:'Cambria, Italic';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;stroke:none;stroke-width:0.5;stroke-dasharray:none"
+       x="189.37897"
+       y="5.9117842">node j</tspan></text>
+  <g
+     id="g36"
+     transform="translate(9.0069855,-24.088215)">
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.4;stroke-dasharray:none"
+       d="m 189.63335,79.999998 h 21 v 9.999999"
+       id="path35"
+       sodipodi:nodetypes="ccc" />
+    <path
+       style="fill:#000000;stroke:none;stroke-width:0.4;stroke-dasharray:none"
+       d="m 207.63335,89.999997 h 6 l -3,5.000001 z"
+       id="path36" />
+  </g>
+  <g
+     id="g36-4"
+     transform="translate(9.5069855,-55.263215)">
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.375436;stroke-dasharray:none"
+       d="m 189.63335,79.999998 h 18.5"
+       id="path35-2"
+       sodipodi:nodetypes="cc" />
+    <path
+       style="fill:#000000;stroke:none;stroke-width:0.4;stroke-dasharray:none"
+       d="m 208.13335,82.999997 v -6 l 5,3 z"
+       id="path36-3" />
+  </g>
+  <g
+     id="g45"
+     transform="translate(38.640331,-24.088215)">
+    <text
+       xml:space="preserve"
+       style="font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:8.46667px;font-family:Cambria;-inkscape-font-specification:'Cambria, Italic';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;text-align:start;writing-mode:lr-tb;direction:ltr;text-anchor:start;fill:#000000;stroke:none;stroke-width:0.499999;stroke-dasharray:none"
+       x="190"
+       y="50"
+       id="text30-1-6"><tspan
+         sodipodi:role="line"
+         style="stroke-width:0.5"
+         x="190"
+         y="50"
+         id="tspan38-5">S<tspan
+   style="font-size:65%;baseline-shift:super"
+   id="tspan42">k</tspan><tspan
+   style="font-size:65%;baseline-shift:sub"
+   id="tspan39">flow</tspan></tspan></text>
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.470285;stroke-dasharray:none"
+       d="m 190,41.979209 17,0.04158"
+       id="path25-4" />
+  </g>
+  <g
+     id="g49"
+     transform="translate(9.5069855,-42.029883)">
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.375436;stroke-dasharray:none"
+       d="m 189.63335,79.999998 h 18.5"
+       id="path48"
+       sodipodi:nodetypes="cc" />
+    <path
+       style="fill:#000000;stroke:none;stroke-width:0.4;stroke-dasharray:none"
+       d="m 208.13335,82.999997 v -6 l 5,3 z"
+       id="path49" />
+  </g>
+  <g
+     id="g51"
+     transform="translate(38.640331,-11.913215)">
+    <text
+       xml:space="preserve"
+       style="font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:8.46667px;font-family:Cambria;-inkscape-font-specification:'Cambria, Italic';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;text-align:start;writing-mode:lr-tb;direction:ltr;text-anchor:start;fill:#000000;stroke:none;stroke-width:0.499999;stroke-dasharray:none"
+       x="190"
+       y="52.645836"
+       id="text51"><tspan
+         sodipodi:role="line"
+         style="stroke-width:0.5"
+         x="190"
+         y="52.645836"
+         id="tspan51">S<tspan
+   style="font-size:65%;baseline-shift:super"
+   id="tspan49">m</tspan><tspan
+   style="font-size:65%;baseline-shift:sub"
+   id="tspan50">flow</tspan></tspan></text>
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.470285;stroke-dasharray:none"
+       d="m 190,45.154211 17,0.04158"
+       id="path51" />
+  </g>
+</svg>
